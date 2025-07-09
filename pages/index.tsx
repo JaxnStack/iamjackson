@@ -4,7 +4,7 @@ export default function Home() {
       {/* Hero Section */}
       <div className="min-h-screen flex flex-col items-center justify-center px-4">
         <h1 className="text-5xl md:text-6xl font-bold mb-4 text-center">
-          Hi, I'm Jackson Njihia 👋
+          Hi, I am Jackson Njihia 👋
         </h1>
         <p className="text-xl md:text-2xl text-center max-w-2xl mb-6">
           A passionate full-stack developer building clean, modern web apps with React, Next.js, Django, and more.
@@ -22,7 +22,7 @@ export default function Home() {
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl font-bold mb-4 text-gray-900 dark:text-white">About Me</h2>
           <p className="text-lg text-gray-700 dark:text-gray-300 mb-6">
-            I'm <span className="font-semibold">Jackson Njihia</span>, a passionate full-stack web developer based in Nairobi, Kenya 🇰🇪.
+            I am <span className="font-semibold">Jackson Njihia</span>, a passionate full-stack web developer based in Nairobi, Kenya 🇰🇪.
             I build scalable and engaging websites using technologies like <span className="font-semibold">React, Django, Node.js</span>, and more.
           </p>
 
@@ -50,7 +50,7 @@ export default function Home() {
           <div className="mt-8 text-gray-700 dark:text-gray-300">
             <p>
               Outside of coding, I love clean UI, good design, and building systems that solve real-world problems.
-              I'm currently available for freelance and contract opportunities.
+              I am currently available for freelance and contract opportunities.
             </p>
           </div>
 
