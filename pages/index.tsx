@@ -2,7 +2,7 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-white dark:bg-black text-gray-900 dark:text-white px-4">
       <h1 className="text-5xl md:text-6xl font-bold mb-4 text-center">
-        Hi, I&apos;m Jackson Njihia 👋
+        Hi, I am Jackson Njihia 👋
       </h1>
       <p className="text-xl md:text-2xl text-center max-w-2xl mb-6">
         A passionate full-stack developer building clean, modern web apps with React, Next.js, Django, and more.
