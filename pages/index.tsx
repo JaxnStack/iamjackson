@@ -1,3 +1,5 @@
+/* eslint-disable react/no-unescaped-entities */
+
 export default function Home() {
   return (
     <main className="bg-white dark:bg-black text-gray-900 dark:text-white">
