@@ -15,8 +15,6 @@ export default function DarkModeToggle() {
     const newTheme = theme === 'light' ? 'dark' : 'light'
     setTheme(newTheme)
     localStorage.setItem('theme', newTheme)
-
-    // ✅ Apply to <html> element
     document.documentElement.setAttribute('data-bs-theme', newTheme)
   }
 

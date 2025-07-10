@@ -1,4 +1,3 @@
-// pages/_document.tsx
 import { Html, Head, Main, NextScript } from 'next/document'
 
 export default function Document() {
@@ -13,17 +12,14 @@ export default function Document() {
           href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css"
         />
 
-        {/* ✅ Force dark mode theme on first paint */}
+        {/* ✅ Set initial theme BEFORE hydration */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
               (function () {
                 try {
-                  const theme = localStorage.getItem('theme');
-                  document.documentElement.setAttribute(
-                    'data-bs-theme',
-                    theme === 'light' ? 'light' : 'dark'
-                  );
+                  const theme = localStorage.getItem('theme') || 'dark';
+                  document.documentElement.setAttribute('data-bs-theme', theme);
                 } catch (_) {}
               })();
             `,
