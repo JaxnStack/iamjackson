@@ -1,7 +1,7 @@
 // pages/_app.tsx
 import type { AppProps } from 'next/app'
-import Head from 'next/head'
 import { useEffect } from 'react'
+import Head from 'next/head'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import '@/styles/globals.css'
@@ -9,9 +9,9 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
-    // @ts-ignore – Ignore TS error about missing types for Bootstrap
-    import('bootstrap/dist/js/bootstrap.bundle.min.js').catch(err =>
-      console.error('Bootstrap JS load failed:', err)
+    // ✅ No type error since we declared this in /types
+    import('bootstrap/dist/js/bootstrap.bundle.min.js').catch((err) =>
+      console.error('Bootstrap load failed:', err)
     )
   }, [])
 
@@ -19,9 +19,9 @@ export default function App({ Component, pageProps }: AppProps) {
     <>
       <Head>
         <title>Jackson Njihia – Portfolio</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        {/* ✅ Remove viewport from here, it's handled in _document */}
       </Head>
-      <div className="d-flex flex-column min-vh-100">
+      <div data-bs-theme="dark">
         <Header />
         <main className="flex-grow-1">
           <Component {...pageProps} />
