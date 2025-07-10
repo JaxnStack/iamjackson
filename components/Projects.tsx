@@ -1,16 +1,24 @@
 export default function Projects() {
   return (
-    <section id="projects" className="py-16 px-4 bg-gray-50 dark:bg-zinc-800">
-      <div className="max-w-5xl mx-auto">
-        <h2 className="text-3xl font-bold mb-8 text-center">Projects</h2>
-        <div className="grid gap-6 md:grid-cols-2">
-          <div className="border p-4 rounded shadow dark:bg-zinc-700">
-            <h3 className="text-xl font-semibold mb-2">Sip Loft</h3>
-            <p>E-commerce platform with M-Pesa, WhatsApp checkout, and Excel product upload.</p>
+    <section id="projects" className="py-5 px-3 bg-body text-body">
+      <div className="container">
+        <h2 className="display-6 fw-bold text-center mb-5">Projects</h2>
+        <div className="row g-4">
+          <div className="col-md-6">
+            <div className="border rounded shadow-sm p-4 h-100 bg-body-secondary">
+              <h3 className="h5 fw-semibold mb-2">Sip Loft</h3>
+              <p className="mb-0">
+                E-commerce platform with M-Pesa, WhatsApp checkout, and Excel product upload.
+              </p>
+            </div>
           </div>
-          <div className="border p-4 rounded shadow dark:bg-zinc-700">
-            <h3 className="text-xl font-semibold mb-2">Rent App Kenya</h3>
-            <p>Real-time rent tracking, M-Pesa STK push, and tenant notifications.</p>
+          <div className="col-md-6">
+            <div className="border rounded shadow-sm p-4 h-100 bg-body-secondary">
+              <h3 className="h5 fw-semibold mb-2">Rent App Kenya</h3>
+              <p className="mb-0">
+                Real-time rent tracking, M-Pesa STK push, and tenant notifications.
+              </p>
+            </div>
           </div>
         </div>
       </div>
