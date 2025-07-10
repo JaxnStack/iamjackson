@@ -9,8 +9,9 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
+    // @ts-ignore – Ignore TS error about missing types for Bootstrap
     import('bootstrap/dist/js/bootstrap.bundle.min.js').catch(err =>
-      console.error('Bootstrap load failed:', err)
+      console.error('Bootstrap JS load failed:', err)
     )
   }, [])
 
