@@ -1,4 +1,3 @@
-// pages/index.tsx
 import { useEffect, useRef } from "react";
 
 export default function Home() {
@@ -84,24 +83,34 @@ export default function Home() {
           margin: 0;
           padding: 0;
           height: 100%;
-          background-color: #111;
+          background-color: #0d0e2d;
           color: #fff;
           font-family: 'Fira Code', monospace;
           overflow: hidden;
         }
 
-        .background {
+        .background,
+        .py-code {
           position: absolute;
-          width: 100%;
+          width: 50%;
           height: 100%;
           top: 0;
-          left: 0;
-          z-index: 0;
-          opacity: 0.15;
-          font-size: 16px;
+          font-size: 14px;
           white-space: pre;
-          color: lime;
-          animation: scroll 25s linear infinite;
+          color: #00bfff;
+          opacity: 0.80;
+          animation: scroll 35s linear infinite;
+          z-index: 0;
+        }
+
+        .background {
+          left: 0;
+          text-align: left;
+        }
+
+        .py-code {
+          right: 0;
+          text-align: right;
         }
 
         @keyframes scroll {
@@ -165,9 +174,9 @@ export default function Home() {
 
         .qualities {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-          gap: 1.5rem;
-          max-width: 900px;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 2rem;
+          max-width: 1000px;
           padding: 1rem;
         }
 
@@ -183,6 +192,12 @@ export default function Home() {
           margin-top: 0;
           font-size: 1.2rem;
           color: #00ffaa;
+        }
+
+        .qualities > .quality:nth-child(5) {
+          grid-column: span 2;
+          justify-self: center;
+          width: 50%;
         }
 
         .checklist {
@@ -217,6 +232,7 @@ export default function Home() {
         }
       `}</style>
 
+      {/* Background Left: Blue JS */}
       <div className="background">
         const developer = &#123;
         <br />
@@ -235,6 +251,28 @@ export default function Home() {
         // Craft. Code. Deploy. Repeat.
       </div>
 
+      {/* Background Right: Python */}
+      <div className="py-code">
+        class Developer:
+        <br />
+        &nbsp;&nbsp;def __init__(self):
+        <br />
+        &nbsp;&nbsp;&nbsp;&nbsp;self.name = "Jackson Njihia"
+        <br />
+        &nbsp;&nbsp;&nbsp;&nbsp;self.stack = ["Django", "React", "Next.js"]
+        <br />
+        &nbsp;&nbsp;&nbsp;&nbsp;self.mission = "Build clean, scalable apps"
+        <br />
+        <br />
+        dev = Developer()
+        <br />
+        print(dev.mission)
+        <br />
+        <br />
+        # Automate. Optimize. Deliver.
+      </div>
+
+      {/* Foreground Content */}
       <div className="foreground">
         <div className="hero" ref={heroRef}></div>
         <div className="typed-text" ref={typewriterRef}></div>
