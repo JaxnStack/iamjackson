@@ -1,35 +1,67 @@
-import { useEffect } from "react";
+// pages/index.tsx
+import { useEffect, useRef } from "react";
 
-export default function Hero() {
+export default function Home() {
+  const heroRef = useRef<HTMLDivElement>(null);
+  const typewriterRef = useRef<HTMLDivElement>(null);
+  const checklistRefs = useRef<HTMLUListElement[]>([]);
+
+  // Hero Typing Animation
   useEffect(() => {
-    // Typing animation
-    const texts = ["Hi, I'm Jackson Njihia"];
-    let textIndex = 0;
-    let charIndex = 0;
-    const typedElement = document.getElementById("typed-text");
-    const handEmoji = document.getElementById("hand-emoji");
+    const heroText = "Hi, I’m Jackson Njihia ";
+    const span = document.createElement("span");
+    span.textContent = "👋";
+    span.style.display = "inline-block";
+    span.style.marginLeft = "0.5rem";
+    span.style.animation = "wave 1s infinite ease-in-out";
 
-    const type = () => {
-      if (charIndex < texts[textIndex].length) {
-        typedElement.textContent += texts[textIndex].charAt(charIndex);
-        charIndex++;
-        setTimeout(type, 100);
-      } else {
-        handEmoji.classList.add("animate-wiggle");
-      }
-    };
+    if (heroRef.current) {
+      heroRef.current.innerHTML = "";
+      let i = 0;
+      const interval = setInterval(() => {
+        if (i < heroText.length) {
+          heroRef.current!.textContent += heroText[i++];
+        } else {
+          clearInterval(interval);
+          heroRef.current!.appendChild(span);
+        }
+      }, 60);
+    }
+  }, []);
 
-    setTimeout(type, 800);
+  // Typewriter Loop
+  useEffect(() => {
+    const text =
+      "Full-stack web developer building clean, scalable, performant apps with Django, React, and Next.js.";
+    let i = 0;
 
-    // Checklist animation
-    const checklists = document.querySelectorAll(".checklist");
-    let currentList = 0,
-      currentItem = 0;
+    function typeLoop() {
+      if (!typewriterRef.current) return;
+      typewriterRef.current.textContent = "";
+      i = 0;
+      const interval = setInterval(() => {
+        if (i < text.length) {
+          typewriterRef.current!.textContent += text[i++];
+        } else {
+          clearInterval(interval);
+          setTimeout(typeLoop, 4000);
+        }
+      }, 40);
+    }
 
-    const tickNext = () => {
-      if (currentList >= checklists.length) return;
+    typeLoop();
+  }, []);
 
-      const items = checklists[currentList].children;
+  // Checklist Animation
+  useEffect(() => {
+    let currentList = 0;
+    let currentItem = 0;
+
+    function tickNext() {
+      if (currentList >= checklistRefs.current.length) return;
+      const items = checklistRefs.current[currentList]?.children;
+      if (!items) return;
+
       if (currentItem < items.length) {
         items[currentItem].classList.add("checked");
         currentItem++;
@@ -39,99 +71,63 @@ export default function Hero() {
         currentItem = 0;
         setTimeout(tickNext, 600);
       }
-    };
+    }
 
-    setTimeout(tickNext, 1500);
+    setTimeout(tickNext, 1000);
   }, []);
 
   return (
-    <section className="min-h-screen flex flex-col justify-center items-center text-white bg-black px-4">
-      <p className="text-sm md:text-base mb-2 text-center">
-        <code>
-          const developer = &#123; name: "Jackson Njihia", stack: ["Django",
-          "React", "Next.js"], mission: "Build clean, fast, scalable apps"
-          &#125;; <br />
-          export default developer; // Craft. Code. Deploy. Repeat.
-        </code>
-      </p>
-
-      <div className="text-4xl md:text-5xl font-bold mb-2 flex items-center justify-center">
-        <span className="inline-block mr-2" id="hand-emoji">
-          👋
-        </span>
-        <span id="typed-text" className="whitespace-nowrap"></span>
-      </div>
-
-      <p className="text-center text-lg mt-3 mb-8">
-        Full-stack web developer building clean, scalable, performant apps with
-        Django, React, and Next.js.
-      </p>
-
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl w-full">
-        <div className="bg-white/5 backdrop-blur-sm p-6 rounded-lg border border-white/10 checklist">
-          <h3 className="text-xl font-semibold mb-2">Clean</h3>
-          <ul className="space-y-2">
-            <li className="opacity-50">✅ Readable code</li>
-            <li className="opacity-50">✅ Organized folders</li>
-            <li className="opacity-50">✅ No unused junk</li>
-          </ul>
-        </div>
-        <div className="bg-white/5 backdrop-blur-sm p-6 rounded-lg border border-white/10 checklist">
-          <h3 className="text-xl font-semibold mb-2">Scalable</h3>
-          <ul className="space-y-2">
-            <li className="opacity-50">✅ Modular structure</li>
-            <li className="opacity-50">✅ Reusable components</li>
-            <li className="opacity-50">✅ Smart data flow</li>
-          </ul>
-        </div>
-        <div className="bg-white/5 backdrop-blur-sm p-6 rounded-lg border border-white/10 checklist">
-          <h3 className="text-xl font-semibold mb-2">Performant</h3>
-          <ul className="space-y-2">
-            <li className="opacity-50">✅ Fast loading</li>
-            <li className="opacity-50">✅ Optimized bundles</li>
-            <li className="opacity-50">✅ Minimal API calls</li>
-          </ul>
-        </div>
-        <div className="bg-white/5 backdrop-blur-sm p-6 rounded-lg border border-white/10 checklist col-span-2 lg:col-span-1">
-          <h3 className="text-xl font-semibold mb-2">Accessible</h3>
-          <ul className="space-y-2">
-            <li className="opacity-50">✅ Screen reader support</li>
-            <li className="opacity-50">✅ Keyboard navigation</li>
-            <li className="opacity-50">✅ High contrast text</li>
-          </ul>
-        </div>
-        <div className="bg-white/5 backdrop-blur-sm p-6 rounded-lg border border-white/10 checklist col-span-2">
-          <h3 className="text-xl font-semibold mb-2">Modern</h3>
-          <ul className="space-y-2">
-            <li className="opacity-50">✅ Dark mode ready</li>
-            <li className="opacity-50">✅ Responsive design</li>
-            <li className="opacity-50">✅ Uses latest tools</li>
-          </ul>
-        </div>
-      </div>
-
+    <>
       <style jsx>{`
-        .checked {
-          opacity: 1 !important;
+        html,
+        body {
+          margin: 0;
+          padding: 0;
+          height: 100%;
+          background-color: #111;
+          color: #fff;
+          font-family: 'Fira Code', monospace;
+          overflow: hidden;
         }
 
-        #hand-emoji {
-          transition: transform 0.3s ease-in-out;
+        .background {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          z-index: 0;
+          opacity: 0.15;
+          font-size: 16px;
+          white-space: pre;
+          color: lime;
+          animation: scroll 25s linear infinite;
         }
 
-        .animate-wiggle {
-          animation: wiggle 1s infinite;
+        @keyframes scroll {
+          from {
+            transform: translateY(100%);
+          }
+          to {
+            transform: translateY(-100%);
+          }
         }
 
-        @keyframes wiggle {
+        @keyframes wave {
           0% {
             transform: rotate(0deg);
           }
-          25% {
-            transform: rotate(15deg);
+          15% {
+            transform: rotate(20deg);
           }
-          50% {
+          30% {
             transform: rotate(-10deg);
+          }
+          45% {
+            transform: rotate(20deg);
+          }
+          60% {
+            transform: rotate(-5deg);
           }
           75% {
             transform: rotate(10deg);
@@ -140,7 +136,133 @@ export default function Hero() {
             transform: rotate(0deg);
           }
         }
+
+        .foreground {
+          position: relative;
+          z-index: 1;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          text-align: center;
+          padding: 2rem;
+        }
+
+        .hero {
+          font-size: 3.5rem;
+          font-weight: bold;
+          margin-bottom: 1rem;
+        }
+
+        .typed-text {
+          font-size: 1.2rem;
+          white-space: nowrap;
+          overflow: hidden;
+          border-right: 2px solid #fff;
+          margin-bottom: 2rem;
+        }
+
+        .qualities {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap: 1.5rem;
+          max-width: 900px;
+          padding: 1rem;
+        }
+
+        .quality {
+          background-color: rgba(255, 255, 255, 0.05);
+          border-radius: 10px;
+          padding: 1rem 1.2rem;
+          text-align: left;
+          box-shadow: 0 0 10px #000;
+        }
+
+        .quality h3 {
+          margin-top: 0;
+          font-size: 1.2rem;
+          color: #00ffaa;
+        }
+
+        .checklist {
+          list-style: none;
+          padding-left: 0;
+          margin: 0;
+        }
+
+        .checklist li {
+          opacity: 0;
+          transform: translateX(-20px);
+          transition: all 0.4s ease;
+          padding-left: 1.2rem;
+          position: relative;
+        }
+
+        .checklist li::before {
+          content: '☐';
+          position: absolute;
+          left: 0;
+          color: #888;
+        }
+
+        .checklist li.checked {
+          opacity: 1;
+          transform: translateX(0);
+        }
+
+        .checklist li.checked::before {
+          content: '✅';
+          color: #00ff88;
+        }
       `}</style>
-    </section>
+
+      <div className="background">
+        const developer = &#123;
+        <br />
+        &nbsp;&nbsp;name: "Jackson Njihia",
+        <br />
+        &nbsp;&nbsp;stack: ["Django", "React", "Next.js"],
+        <br />
+        &nbsp;&nbsp;mission: "Build clean, fast, scalable apps"
+        <br />
+        &#125;;
+        <br />
+        <br />
+        export default developer;
+        <br />
+        <br />
+        // Craft. Code. Deploy. Repeat.
+      </div>
+
+      <div className="foreground">
+        <div className="hero" ref={heroRef}></div>
+        <div className="typed-text" ref={typewriterRef}></div>
+
+        <div className="qualities">
+          {[
+            ["Clean", ["Readable code", "Organized folders", "No unused junk"]],
+            ["Scalable", ["Modular structure", "Reusable components", "Smart data flow"]],
+            ["Performant", ["Fast loading", "Optimized bundles", "Minimal API calls"]],
+            ["Accessible", ["Screen reader friendly", "Keyboard nav", "High contrast UI"]],
+            ["Maintainable", ["Commented logic", "Versioned git", "Linted + formatted"]],
+          ].map(([title, items], index) => (
+            <div className="quality" key={title}>
+              <h3>{title}</h3>
+              <ul
+                className="checklist"
+                ref={(el) => {
+                  if (el) checklistRefs.current[index] = el;
+                }}
+              >
+                {(items as string[]).map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </>
   );
 }
