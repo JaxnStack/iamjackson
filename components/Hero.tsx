@@ -95,12 +95,13 @@ export default function Home() {
           width: 50%;
           height: 100%;
           top: 0;
-          font-size: 14px;
+          font-size: 18px;
           white-space: pre;
           color: #00bfff;
-          opacity: 0.80;
-          animation: scroll 35s linear infinite;
+          opacity: 0.95;
+          animation: scroll 16s linear infinite;
           z-index: 0;
+          padding: 2rem;
         }
 
         .background {
