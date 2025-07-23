@@ -1,9 +1,9 @@
 import { useEffect, useRef } from "react";
 
 export default function Home() {
-  const heroRef = useRef<HTMLDivElement>(null);
-  const typewriterRef = useRef<HTMLDivElement>(null);
-  const checklistRefs = useRef<HTMLUListElement[]>([]);
+  const heroRef = useRef<HTMLDivElement | null>(null);
+  const typewriterRef = useRef<HTMLDivElement | null>(null);
+  const checklistRefs = useRef<Array<HTMLUListElement | null>>([]);
 
   // Hero Typing Animation
   useEffect(() => {
@@ -58,8 +58,9 @@ export default function Home() {
 
     function tickNext() {
       if (currentList >= checklistRefs.current.length) return;
-      const items = checklistRefs.current[currentList]?.children;
-      if (!items) return;
+      const list = checklistRefs.current[currentList];
+      if (!list) return;
+      const items = Array.from(list.children) as HTMLElement[];
 
       if (currentItem < items.length) {
         items[currentItem].classList.add("checked");
@@ -74,6 +75,14 @@ export default function Home() {
 
     setTimeout(tickNext, 1000);
   }, []);
+
+  const qualities: Array<[string, string[]]> = [
+    ["Clean", ["Readable code", "Organized folders", "No unused junk"]],
+    ["Scalable", ["Modular structure", "Reusable components", "Smart data flow"]],
+    ["Performant", ["Fast loading", "Optimized bundles", "Minimal API calls"]],
+    ["Accessible", ["Screen reader friendly", "Keyboard nav", "High contrast UI"]],
+    ["Maintainable", ["Commented logic", "Versioned git", "Linted + formatted"]],
+  ];
 
   return (
     <>
@@ -279,22 +288,16 @@ export default function Home() {
         <div className="typed-text" ref={typewriterRef}></div>
 
         <div className="qualities">
-          {[
-            ["Clean", ["Readable code", "Organized folders", "No unused junk"]],
-            ["Scalable", ["Modular structure", "Reusable components", "Smart data flow"]],
-            ["Performant", ["Fast loading", "Optimized bundles", "Minimal API calls"]],
-            ["Accessible", ["Screen reader friendly", "Keyboard nav", "High contrast UI"]],
-            ["Maintainable", ["Commented logic", "Versioned git", "Linted + formatted"]],
-          ].map(([title, items], index) => (
+          {qualities.map(([title, items], index) => (
             <div className="quality" key={title}>
               <h3>{title}</h3>
               <ul
                 className="checklist"
                 ref={(el) => {
-                  if (el) checklistRefs.current[index] = el;
+                  checklistRefs.current[index] = el;
                 }}
               >
-                {(items as string[]).map((item) => (
+                {items.map((item) => (
                   <li key={item}>{item}</li>
                 ))}
               </ul>
