@@ -1,9 +1,10 @@
+'use client';
 import { useEffect, useRef } from "react";
 
 export default function Home() {
-  const heroRef = useRef<HTMLDivElement | null>(null);
-  const typewriterRef = useRef<HTMLDivElement | null>(null);
-  const checklistRefs = useRef<Array<HTMLUListElement | null>>([]);
+  const heroRef = useRef<HTMLDivElement>(null);
+  const typewriterRef = useRef<HTMLDivElement>(null);
+  const checklistRefs = useRef<(HTMLUListElement | null)[]>([]);
 
   // Hero Typing Animation
   useEffect(() => {
@@ -242,9 +243,9 @@ export default function Home() {
         }
       `}</style>
 
-      {/* Background Left: Blue JS */}
+      {/* Background JS Side */}
       <div className="background">
-        const developer = &#123;
+        {"const developer = {"}
         <br />
         &nbsp;&nbsp;name: "Jackson Njihia",
         <br />
@@ -252,7 +253,7 @@ export default function Home() {
         <br />
         &nbsp;&nbsp;mission: "Build clean, fast, scalable apps"
         <br />
-        &#125;;
+        {"};"}
         <br />
         <br />
         export default developer;
@@ -261,7 +262,7 @@ export default function Home() {
         // Craft. Code. Deploy. Repeat.
       </div>
 
-      {/* Background Right: Python */}
+      {/* Background Python Side */}
       <div className="py-code">
         class Developer:
         <br />
@@ -282,7 +283,7 @@ export default function Home() {
         # Automate. Optimize. Deliver.
       </div>
 
-      {/* Foreground Content */}
+      {/* Foreground */}
       <div className="foreground">
         <div className="hero" ref={heroRef}></div>
         <div className="typed-text" ref={typewriterRef}></div>
@@ -298,7 +299,7 @@ export default function Home() {
                 }}
               >
                 {items.map((item) => (
-                  <li key={item}>{item}</li>
+                  <li key={`${title}-${item}`}>{item}</li>
                 ))}
               </ul>
             </div>
