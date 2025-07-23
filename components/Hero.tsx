@@ -7,7 +7,7 @@ export default function Home() {
 
   // Hero Typing Animation
   useEffect(() => {
-    const heroText = "Hi, I’m Jackson Njihia ";
+    const heroText = "Hi, I am Jackson Njihia ";
     const span = document.createElement("span");
     span.textContent = "👋";
     span.style.display = "inline-block";
