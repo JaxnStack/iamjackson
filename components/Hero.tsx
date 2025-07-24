@@ -1,12 +1,14 @@
 'use client';
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Home() {
   const heroRef = useRef<HTMLDivElement>(null);
   const typewriterRef = useRef<HTMLDivElement>(null);
   const checklistRefs = useRef<(HTMLUListElement | null)[]>([]);
+  const [hasTransitioned, setHasTransitioned] = useState(false);
+  const [phase1Done, setPhase1Done] = useState(false);
 
-  // Hero Typing Animation
+  // Typing animation for name
   useEffect(() => {
     const heroText = "Hi, I am Jackson Njihia ";
     const span = document.createElement("span");
@@ -29,31 +31,31 @@ export default function Home() {
     }
   }, []);
 
-  // Typewriter Loop
+  // Typing animation for description
   useEffect(() => {
     const text =
       "Full-stack web developer building clean, scalable, performant apps with Django, React, and Next.js.";
     let i = 0;
 
-    function typeLoop() {
-      if (!typewriterRef.current) return;
-      typewriterRef.current.textContent = "";
-      i = 0;
-      const interval = setInterval(() => {
-        if (i < text.length) {
-          typewriterRef.current!.textContent += text[i++];
-        } else {
-          clearInterval(interval);
-          setTimeout(typeLoop, 4000);
-        }
-      }, 40);
-    }
-
-    typeLoop();
+    if (!typewriterRef.current) return;
+    typewriterRef.current.textContent = "";
+    const interval = setInterval(() => {
+      if (i < text.length) {
+        typewriterRef.current!.textContent += text[i++];
+      } else {
+        clearInterval(interval);
+        setTimeout(() => {
+          setHasTransitioned(true);
+          setTimeout(() => setPhase1Done(true), 1000);
+        }, 1000);
+      }
+    }, 40);
   }, []);
 
-  // Checklist Animation
+  // Checklist reveal
   useEffect(() => {
+    if (!hasTransitioned) return;
+
     let currentList = 0;
     let currentItem = 0;
 
@@ -74,8 +76,8 @@ export default function Home() {
       }
     }
 
-    setTimeout(tickNext, 1000);
-  }, []);
+    setTimeout(tickNext, 500);
+  }, [hasTransitioned]);
 
   const qualities: Array<[string, string[]]> = [
     ["Clean", ["Readable code", "Organized folders", "No unused junk"]],
@@ -88,18 +90,17 @@ export default function Home() {
   return (
     <>
       <style jsx>{`
-        html,
-        body {
+        html, body {
           margin: 0;
           padding: 0;
           height: 100%;
-          background-color: #0d0e2d;
+          background: #0d0e2d;
           color: #fff;
           font-family: 'Fira Code', monospace;
           overflow: hidden;
         }
 
-        .background,
+        .scrolling-background,
         .py-code {
           position: absolute;
           width: 50%;
@@ -108,13 +109,15 @@ export default function Home() {
           font-size: 18px;
           white-space: pre;
           color: #00bfff;
-          opacity: 0.95;
-          animation: scroll 16s linear infinite;
-          z-index: 0;
+          opacity: ${hasTransitioned ? 0 : 0.95};
+          animation: scroll 16s linear 1;
+          z-index: 1;
           padding: 2rem;
+          pointer-events: none;
+          transition: opacity 1s ease-in-out;
         }
 
-        .background {
+        .scrolling-background {
           left: 0;
           text-align: left;
         }
@@ -125,42 +128,39 @@ export default function Home() {
         }
 
         @keyframes scroll {
-          from {
-            transform: translateY(100%);
-          }
-          to {
-            transform: translateY(-100%);
-          }
+          from { transform: translateY(100%); }
+          to { transform: translateY(-100%); }
         }
 
         @keyframes wave {
-          0% {
-            transform: rotate(0deg);
-          }
-          15% {
-            transform: rotate(20deg);
-          }
-          30% {
-            transform: rotate(-10deg);
-          }
-          45% {
-            transform: rotate(20deg);
-          }
-          60% {
-            transform: rotate(-5deg);
-          }
-          75% {
-            transform: rotate(10deg);
-          }
-          100% {
-            transform: rotate(0deg);
-          }
+          0% { transform: rotate(0deg); }
+          15% { transform: rotate(20deg); }
+          30% { transform: rotate(-10deg); }
+          45% { transform: rotate(20deg); }
+          60% { transform: rotate(-5deg); }
+          75% { transform: rotate(10deg); }
+          100% { transform: rotate(0deg); }
+        }
+
+        .background-image {
+          position: fixed;
+          top: 0;
+          left: 0;
+          height: 100vh;
+          width: 100vw;
+          background-image: url("https://cdn.pixabay.com/photo/2021/08/04/13/06/software-developer-6521720_1280.jpg");
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+          z-index: 0;
+          opacity: ${hasTransitioned ? 1 : 0};
+          transition: opacity 1s ease-in-out;
         }
 
         .foreground {
           position: relative;
-          z-index: 1;
-          height: 100%;
+          z-index: 2;
+          min-height: 100vh;
           display: flex;
           flex-direction: column;
           justify-content: center;
@@ -243,18 +243,18 @@ export default function Home() {
         }
       `}</style>
 
-      <div className="background">
-        {`const developer = {
+      {/* PHASE 1 SCROLLING TEXT */}
+      {!phase1Done && (
+        <>
+          <div className="scrolling-background">
+            {`const developer = {
   name: "Jackson Njihia",
   stack: ["Django", "React", "Next.js"],
   mission: "Build clean, fast, scalable apps"
-};
-
-export default developer;`}
-      </div>
-
-      <div className="py-code">
-        {`class Developer:
+};`}
+          </div>
+          <div className="py-code">
+            {`class Developer:
   def __init__(self):
     self.name = "Jackson Njihia"
     self.stack = ["Django", "React", "Next.js"]
@@ -262,8 +262,14 @@ export default developer;`}
 
 dev = Developer()
 print(dev.mission)`}
-      </div>
+          </div>
+        </>
+      )}
 
+      {/* PHASE 2 IMAGE BACKGROUND */}
+      <div className="background-image" />
+
+      {/* FOREGROUND CONTENT */}
       <div className="foreground">
         <div className="hero" ref={heroRef}></div>
         <div className="typed-text" ref={typewriterRef}></div>
@@ -275,8 +281,8 @@ print(dev.mission)`}
               <ul
                 className="checklist"
                 ref={(el) => {
-                  checklistRefs.current[index] = el;
-                }}
+  checklistRefs.current[index] = el;
+}}
               >
                 {items.map((item) => (
                   <li key={`${title}-${item}`}>{item}</li>
