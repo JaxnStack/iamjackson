@@ -243,47 +243,27 @@ export default function Home() {
         }
       `}</style>
 
-      {/* Background JS Side */}
       <div className="background">
-        {"const developer = {"}
-        <br />
-        &nbsp;&nbsp;name: "Jackson Njihia",
-        <br />
-        &nbsp;&nbsp;stack: ["Django", "React", "Next.js"],
-        <br />
-        &nbsp;&nbsp;mission: "Build clean, fast, scalable apps"
-        <br />
-        {"};"}
-        <br />
-        <br />
-        export default developer;
-        <br />
-        <br />
-        // Craft. Code. Deploy. Repeat.
+        {`const developer = {
+  name: "Jackson Njihia",
+  stack: ["Django", "React", "Next.js"],
+  mission: "Build clean, fast, scalable apps"
+};
+
+export default developer;`}
       </div>
 
-      {/* Background Python Side */}
       <div className="py-code">
-        class Developer:
-        <br />
-        &nbsp;&nbsp;def __init__(self):
-        <br />
-        &nbsp;&nbsp;&nbsp;&nbsp;self.name = "Jackson Njihia"
-        <br />
-        &nbsp;&nbsp;&nbsp;&nbsp;self.stack = ["Django", "React", "Next.js"]
-        <br />
-        &nbsp;&nbsp;&nbsp;&nbsp;self.mission = "Build clean, scalable apps"
-        <br />
-        <br />
-        dev = Developer()
-        <br />
-        print(dev.mission)
-        <br />
-        <br />
-        # Automate. Optimize. Deliver.
+        {`class Developer:
+  def __init__(self):
+    self.name = "Jackson Njihia"
+    self.stack = ["Django", "React", "Next.js"]
+    self.mission = "Build clean, scalable apps"
+
+dev = Developer()
+print(dev.mission)`}
       </div>
 
-      {/* Foreground */}
       <div className="foreground">
         <div className="hero" ref={heroRef}></div>
         <div className="typed-text" ref={typewriterRef}></div>
