@@ -1,4 +1,7 @@
+'use client'
+
 import { useEffect } from 'react'
+import Link from 'next/link'
 import Image from 'next/image'
 import DarkModeToggle from './DarkModeToggle'
 
@@ -15,7 +18,7 @@ export default function Header() {
       <nav className="navbar navbar-expand-lg bg-body container">
         <div className="container-fluid">
           {/* ✅ Brand with profile picture and name */}
-          <a className="navbar-brand fw-bold d-flex align-items-center gap-2" href="#">
+          <Link href="/" className="navbar-brand fw-bold d-flex align-items-center gap-2">
             <Image
               src="/profile.jpeg"
               alt="Jackson's profile picture"
@@ -25,7 +28,7 @@ export default function Header() {
               priority
             />
             Jackson Njihia
-          </a>
+          </Link>
 
           {/* ✅ Responsive navbar toggle */}
           <button
@@ -44,7 +47,7 @@ export default function Header() {
           <div className="collapse navbar-collapse justify-content-between" id="mainNavbar">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0 gap-lg-3">
               <li className="nav-item">
-                <a className="nav-link" href="#about">About</a>
+                <Link href="/about" className="nav-link">About</Link>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="#skills">Skills</a>

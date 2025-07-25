@@ -1,0 +1,119 @@
+.waveEmoji {
+  display: inline-block;
+  margin-left: 0.5rem;
+  animation: wave 1s infinite ease-in-out;
+}
+
+.backgroundImage {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-image: url("https://cdn.pixabay.com/photo/2021/08/04/13/06/software-developer-6521720_1280.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.backgroundImage.visible {
+  opacity: 1;
+}
+
+.foreground {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+}
+
+.hero {
+  font-size: 3.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.typedText {
+  font-size: 1.2rem;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 2px solid #fff;
+  margin-bottom: 2rem;
+}
+
+.qualities {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  max-width: 1000px;
+  padding: 1rem;
+}
+
+.quality {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  padding: 1rem 1.2rem;
+  text-align: left;
+  box-shadow: 0 0 10px #000;
+}
+
+.quality h3 {
+  margin-top: 0;
+  font-size: 1.2rem;
+  color: #00ffaa;
+}
+
+.qualities > .quality:nth-child(5) {
+  grid-column: span 2;
+  justify-self: center;
+  width: 50%;
+}
+
+.checklist {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.checklist li {
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: all 0.4s ease;
+  padding-left: 1.2rem;
+  position: relative;
+}
+
+.checklist li::before {
+  content: '☐';
+  position: absolute;
+  left: 0;
+  color: #888;
+}
+
+.checklist li.checked {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.checklist li.checked::before {
+  content: '✅';
+  color: #00ff88;
+}
+
+@keyframes wave {
+  0% { transform: rotate(0deg); }
+  15% { transform: rotate(20deg); }
+  30% { transform: rotate(-10deg); }
+  45% { transform: rotate(20deg); }
+  60% { transform: rotate(-5deg); }
+  75% { transform: rotate(10deg); }
+  100% { transform: rotate(0deg); }
+}

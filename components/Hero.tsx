@@ -1,7 +1,9 @@
 'use client';
-import { useEffect, useRef, useState } from "react";
 
-export default function Home() {
+import { useEffect, useRef, useState } from 'react';
+import styles from './Hero.module.css'; // ✅ Make sure Hero.module.css uses only local class selectors
+
+export default function Hero() {
   const heroRef = useRef<HTMLDivElement>(null);
   const typewriterRef = useRef<HTMLDivElement>(null);
   const checklistRefs = useRef<(HTMLUListElement | null)[]>([]);
@@ -10,15 +12,13 @@ export default function Home() {
 
   // Typing animation for name
   useEffect(() => {
-    const heroText = "Hi, I am Jackson Njihia ";
-    const span = document.createElement("span");
-    span.textContent = "👋";
-    span.style.display = "inline-block";
-    span.style.marginLeft = "0.5rem";
-    span.style.animation = "wave 1s infinite ease-in-out";
+    const heroText = 'Hi, I am Jackson Njihia ';
+    const span = document.createElement('span');
+    span.textContent = '👋';
+    span.className = styles.waveEmoji;
 
     if (heroRef.current) {
-      heroRef.current.innerHTML = "";
+      heroRef.current.innerHTML = '';
       let i = 0;
       const interval = setInterval(() => {
         if (i < heroText.length) {
@@ -34,11 +34,11 @@ export default function Home() {
   // Typing animation for description
   useEffect(() => {
     const text =
-      "Full-stack web developer building clean, scalable, performant apps with Django, React, and Next.js.";
+      'Full-stack web developer building clean, scalable, performant apps with Django, React, and Next.js.';
     let i = 0;
 
     if (!typewriterRef.current) return;
-    typewriterRef.current.textContent = "";
+    typewriterRef.current.textContent = '';
     const interval = setInterval(() => {
       if (i < text.length) {
         typewriterRef.current!.textContent += text[i++];
@@ -52,7 +52,7 @@ export default function Home() {
     }, 40);
   }, []);
 
-  // Checklist reveal
+  // Checklist animation
   useEffect(() => {
     if (!hasTransitioned) return;
 
@@ -66,7 +66,7 @@ export default function Home() {
       const items = Array.from(list.children) as HTMLElement[];
 
       if (currentItem < items.length) {
-        items[currentItem].classList.add("checked");
+        items[currentItem].classList.add(styles.checked);
         currentItem++;
         setTimeout(tickNext, 400);
       } else {
@@ -80,180 +80,25 @@ export default function Home() {
   }, [hasTransitioned]);
 
   const qualities: Array<[string, string[]]> = [
-    ["Clean", ["Readable code", "Organized folders", "No unused junk"]],
-    ["Scalable", ["Modular structure", "Reusable components", "Smart data flow"]],
-    ["Performant", ["Fast loading", "Optimized bundles", "Minimal API calls"]],
-    ["Accessible", ["Screen reader friendly", "Keyboard nav", "High contrast UI"]],
-    ["Maintainable", ["Commented logic", "Versioned git", "Linted + formatted"]],
+    ['Clean', ['Readable code', 'Organized folders', 'No unused junk']],
+    ['Scalable', ['Modular structure', 'Reusable components', 'Smart data flow']],
+    ['Performant', ['Fast loading', 'Optimized bundles', 'Minimal API calls']],
+    ['Accessible', ['Screen reader friendly', 'Keyboard nav', 'High contrast UI']],
+    ['Maintainable', ['Commented logic', 'Versioned git', 'Linted + formatted']],
   ];
 
   return (
     <>
-      <style jsx>{`
-        html, body {
-          margin: 0;
-          padding: 0;
-          height: 100%;
-          background: #0d0e2d;
-          color: #fff;
-          font-family: 'Fira Code', monospace;
-          overflow: hidden;
-        }
-
-        .scrolling-background,
-        .py-code {
-          position: absolute;
-          width: 50%;
-          height: 100%;
-          top: 0;
-          font-size: 18px;
-          white-space: pre;
-          color: #00bfff;
-          opacity: ${hasTransitioned ? 0 : 0.95};
-          animation: scroll 16s linear 1;
-          z-index: 1;
-          padding: 2rem;
-          pointer-events: none;
-          transition: opacity 1s ease-in-out;
-        }
-
-        .scrolling-background {
-          left: 0;
-          text-align: left;
-        }
-
-        .py-code {
-          right: 0;
-          text-align: right;
-        }
-
-        @keyframes scroll {
-          from { transform: translateY(100%); }
-          to { transform: translateY(-100%); }
-        }
-
-        @keyframes wave {
-          0% { transform: rotate(0deg); }
-          15% { transform: rotate(20deg); }
-          30% { transform: rotate(-10deg); }
-          45% { transform: rotate(20deg); }
-          60% { transform: rotate(-5deg); }
-          75% { transform: rotate(10deg); }
-          100% { transform: rotate(0deg); }
-        }
-
-        .background-image {
-          position: fixed;
-          top: 0;
-          left: 0;
-          height: 100vh;
-          width: 100vw;
-          background-image: url("https://cdn.pixabay.com/photo/2021/08/04/13/06/software-developer-6521720_1280.jpg");
-          background-size: cover;
-          background-position: center;
-          background-repeat: no-repeat;
-          z-index: 0;
-          opacity: ${hasTransitioned ? 1 : 0};
-          transition: opacity 1s ease-in-out;
-        }
-
-        .foreground {
-          position: relative;
-          z-index: 2;
-          min-height: 100vh;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          text-align: center;
-          padding: 2rem;
-        }
-
-        .hero {
-          font-size: 3.5rem;
-          font-weight: bold;
-          margin-bottom: 1rem;
-        }
-
-        .typed-text {
-          font-size: 1.2rem;
-          white-space: nowrap;
-          overflow: hidden;
-          border-right: 2px solid #fff;
-          margin-bottom: 2rem;
-        }
-
-        .qualities {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 2rem;
-          max-width: 1000px;
-          padding: 1rem;
-        }
-
-        .quality {
-          background-color: rgba(255, 255, 255, 0.05);
-          border-radius: 10px;
-          padding: 1rem 1.2rem;
-          text-align: left;
-          box-shadow: 0 0 10px #000;
-        }
-
-        .quality h3 {
-          margin-top: 0;
-          font-size: 1.2rem;
-          color: #00ffaa;
-        }
-
-        .qualities > .quality:nth-child(5) {
-          grid-column: span 2;
-          justify-self: center;
-          width: 50%;
-        }
-
-        .checklist {
-          list-style: none;
-          padding-left: 0;
-          margin: 0;
-        }
-
-        .checklist li {
-          opacity: 0;
-          transform: translateX(-20px);
-          transition: all 0.4s ease;
-          padding-left: 1.2rem;
-          position: relative;
-        }
-
-        .checklist li::before {
-          content: '☐';
-          position: absolute;
-          left: 0;
-          color: #888;
-        }
-
-        .checklist li.checked {
-          opacity: 1;
-          transform: translateX(0);
-        }
-
-        .checklist li.checked::before {
-          content: '✅';
-          color: #00ff88;
-        }
-      `}</style>
-
-      {/* PHASE 1 SCROLLING TEXT */}
       {!phase1Done && (
         <>
-          <div className="scrolling-background">
+          <div className={styles.scrollingBackground}>
             {`const developer = {
   name: "Jackson Njihia",
   stack: ["Django", "React", "Next.js"],
   mission: "Build clean, fast, scalable apps"
 };`}
           </div>
-          <div className="py-code">
+          <div className={styles.pyCode}>
             {`class Developer:
   def __init__(self):
     self.name = "Jackson Njihia"
@@ -266,23 +111,21 @@ print(dev.mission)`}
         </>
       )}
 
-      {/* PHASE 2 IMAGE BACKGROUND */}
-      <div className="background-image" />
+      <div className={`${styles.backgroundImage} ${hasTransitioned ? styles.visible : ''}`} />
 
-      {/* FOREGROUND CONTENT */}
-      <div className="foreground">
-        <div className="hero" ref={heroRef}></div>
-        <div className="typed-text" ref={typewriterRef}></div>
+      <div className={styles.foreground}>
+        <div className={styles.hero} ref={heroRef}></div>
+        <div className={styles.typedText} ref={typewriterRef}></div>
 
-        <div className="qualities">
+        <div className={styles.qualities}>
           {qualities.map(([title, items], index) => (
-            <div className="quality" key={title}>
+            <div className={styles.quality} key={title}>
               <h3>{title}</h3>
               <ul
-                className="checklist"
+                className={styles.checklist}
                 ref={(el) => {
-  checklistRefs.current[index] = el;
-}}
+                  checklistRefs.current[index] = el;
+                }}
               >
                 {items.map((item) => (
                   <li key={`${title}-${item}`}>{item}</li>
